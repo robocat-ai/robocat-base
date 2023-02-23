@@ -70,6 +70,8 @@ USER $USER
 
 COPY config/tinyproxy.conf.tmpl /home/robocat/.config/tinyproxy.conf.tmpl
 
+COPY resources/malek-dridi-0F7GRXNOG7g-unsplash.jpg /usr/share/images/fluxbox/background.png
+
 COPY scripts/run.sh scripts/bootstrap.sh /
 
 CMD /bootstrap.sh
