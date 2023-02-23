@@ -66,12 +66,12 @@ ENV DISPLAY=:1
 # Fixes "DSO support routines" error
 ENV OPENSSL_CONF=/dev/null
 
-USER $USER
-
-COPY config/tinyproxy.conf.tmpl /home/robocat/.config/tinyproxy.conf.tmpl
-
 COPY resources/malek-dridi-0F7GRXNOG7g-unsplash.jpg /usr/share/images/fluxbox/background.png
-
+COPY config/tinyproxy.conf.tmpl /home/$USER/.config/tinyproxy.conf.tmpl
 COPY scripts/run.sh scripts/bootstrap.sh /
+
+RUN chown $USER:$USER /run.sh /bootstrap.sh
+
+USER $USER
 
 CMD /bootstrap.sh
