@@ -70,8 +70,6 @@ COPY resources/malek-dridi-0F7GRXNOG7g-unsplash.jpg /usr/share/images/fluxbox/ba
 COPY config/tinyproxy.conf.tmpl /home/$USER/.config/tinyproxy.conf.tmpl
 COPY scripts/run.sh scripts/bootstrap.sh /
 
-RUN chown $USER:$USER /run.sh /bootstrap.sh
-
 USER $USER
 
 CMD /bootstrap.sh
