@@ -12,7 +12,7 @@ main() {
     local background_path="/usr/share/images/fluxbox/background.png"
     if [ -f "$background_path" ]; then
         feh --no-fehbg --bg-scale "$background_path"
-        log_i "Updated background"
+        log_i "Updated background image"
     fi
 
     if [ "$VNC_ENABLED" = 1 ]; then
