@@ -9,7 +9,8 @@ RUN apt-get install -y \
     fluxbox \
     wmctrl \
     gnupg \
-    wget
+    wget \
+    git
 
 # Install Google Chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
