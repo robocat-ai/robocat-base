@@ -28,6 +28,8 @@ You will see TagUI logging its progress. After it finishes, you can see the resu
 docker cp robocat:/home/robocat/flow/top_result.png .
 ```
 
+![google result](examples/google-result.png)
+
 ## Full list of installed dependencies
 
 - [Amazon Corretto 8 (1.8.0)](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/what-is-corretto-8.html)
