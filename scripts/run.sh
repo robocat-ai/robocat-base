@@ -1,13 +1,35 @@
 #!/bin/bash
 
+export ROBOCAT_HOME=/home/robocat
 
-main() {
-    ROBOCAT_HOME=/home/robocat
+initialize_flow_directory() {
+    log_d "Initializing flow directory..."
+
+    FLOW_SOURCE_DIR=/flow
+
+    if [ ! -d "$FLOW_SOURCE_DIR" ]; then
+        log_e "No flow directory is mounted to $FLOW_SOURCE_DIR"
+        exit
+    fi
+
     FLOW_DIR=$ROBOCAT_HOME/flow
 
-    if [ ! -d "$FLOW_DIR" ]; then
-        mkdir -p "$FLOW_DIR"
-    fi
+    log_d "Cleaning up previous flow directory: $FLOW_DIR"
+
+    rm -rf "$FLOW_DIR"
+    mkdir -p "$FLOW_DIR"
+
+    log_d "Making a fresh copy of flow directory..."
+
+    cp -rT "$FLOW_SOURCE_DIR" "$FLOW_DIR"
+
+    log_d "Initialized flow directory: $FLOW_DIR"
+
+    export FLOW_DIR
+}
+
+main() {
+    initialize_flow_directory
 
     cd $FLOW_DIR
 
