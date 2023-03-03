@@ -1,7 +1,15 @@
 #!/bin/bash
 
+export HOME=/home/robocat
+
 main() {
-    cd ~/flow
+    FLOW_DIR=$HOME/flow
+
+    if [ ! -d "$FLOW_DIR" ]; then
+        mkdir -p "$FLOW_DIR"
+    fi
+
+    cd $FLOW_DIR
 
     # Default argument values
     FLOW_PATH="${FLOW_PATH:-run.tag}"
@@ -30,10 +38,10 @@ main() {
         fi
     fi
 
-    cp ~/.config/tinyproxy.conf.tmpl ~/.config/tinyproxy.conf
+    cp $HOME/.config/tinyproxy.conf.tmpl $HOME/.config/tinyproxy.conf
 
     if [ -n "$PROXY_ADDRESS" ]; then
-        echo "Upstream $PROXY_PROTOCOL $PROXY_ADDRESS" >> ~/.config/tinyproxy.conf
+        echo "Upstream $PROXY_PROTOCOL $PROXY_ADDRESS" >>$HOME/.config/tinyproxy.conf
     fi
 
     kill_tinyproxy
@@ -41,11 +49,11 @@ main() {
     log_d "Starting tinyproxy..."
 
     mkdir -p /tmp/tinyproxy
-    tinyproxy -d -c ~/.config/tinyproxy.conf > /dev/null 2> /tmp/tinyproxy/error.log &
+    tinyproxy -d -c $HOME/.config/tinyproxy.conf >/dev/null 2>/tmp/tinyproxy/error.log &
     tinyproxy_pid=$!
 
     sleep 1
-    kill -0 $tinyproxy_pid 2> /dev/null
+    kill -0 $tinyproxy_pid 2>/dev/null
 
     if [ $? -ne 0 ]; then
         log_e "tinyproxy failed to start, got error:"
@@ -55,7 +63,7 @@ main() {
 
     log_d "tinyproxy started"
 
-    rm -rf ~/tagui/src/chrome/tagui_user_profile
+    rm -rf $HOME/tagui/src/chrome/tagui_user_profile
     tagui "$FLOW_PATH" "$DATA_PATH"
 
     kill_tinyproxy
@@ -85,7 +93,7 @@ kill_tinyproxy() {
     while true; do
         tinyproxy_process_id="$(ps x | grep tinyproxy | grep -v 'grep tinyproxy' | awk '{print $1}' | sort -nur | head -n 1)"
         if [ -n "$tinyproxy_process_id" ]; then
-            kill $tinyproxy_process_id > /dev/null 2>&1
+            kill $tinyproxy_process_id >/dev/null 2>&1
         else
             break
         fi
