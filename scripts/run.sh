@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export HOME=/home/robocat
 
 main() {
-    FLOW_DIR=$HOME/flow
+    ROBOCAT_HOME=/home/robocat
+    FLOW_DIR=$ROBOCAT_HOME/flow
 
     if [ ! -d "$FLOW_DIR" ]; then
         mkdir -p "$FLOW_DIR"
@@ -38,10 +38,10 @@ main() {
         fi
     fi
 
-    cp $HOME/.config/tinyproxy.conf.tmpl $HOME/.config/tinyproxy.conf
+    cp $ROBOCAT_HOME/.config/tinyproxy.conf.tmpl $ROBOCAT_HOME/.config/tinyproxy.conf
 
     if [ -n "$PROXY_ADDRESS" ]; then
-        echo "Upstream $PROXY_PROTOCOL $PROXY_ADDRESS" >>$HOME/.config/tinyproxy.conf
+        echo "Upstream $PROXY_PROTOCOL $PROXY_ADDRESS" >>$ROBOCAT_HOME/.config/tinyproxy.conf
     fi
 
     kill_tinyproxy
@@ -49,7 +49,7 @@ main() {
     log_d "Starting tinyproxy..."
 
     mkdir -p /tmp/tinyproxy
-    tinyproxy -d -c $HOME/.config/tinyproxy.conf >/dev/null 2>/tmp/tinyproxy/error.log &
+    tinyproxy -d -c $ROBOCAT_HOME/.config/tinyproxy.conf >/dev/null 2>/tmp/tinyproxy/error.log &
     tinyproxy_pid=$!
 
     sleep 1
@@ -63,7 +63,7 @@ main() {
 
     log_d "tinyproxy started"
 
-    rm -rf $HOME/tagui/src/chrome/tagui_user_profile
+    rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
     tagui "$FLOW_PATH" "$DATA_PATH"
 
     kill_tinyproxy
