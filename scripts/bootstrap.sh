@@ -21,8 +21,6 @@ main() {
         last_process=$!
     fi
 
-    # google-chrome --profile-directory=Robocat --disable-dev-shm-usage --disable-gpu
-
     if [ -n "$(which robocat)" ]; then
         log_i "Starting Robocat..."
         robocat &
