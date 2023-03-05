@@ -58,7 +58,6 @@ RUN rm /home/$USER/tagui/src/sikulix/sikulix.jar && \
 
 USER root
 
-# RUN touch /home/$USER/tagui/src/tagui_no_sandbox
 RUN sed -i -e 's/chrome_switches="--remote-debugging-port=9222/chrome_switches="--remote-debugging-port=9222 --no-first-run --disable-dev-shm-usage --no-sandbox --disable-setuid-sandbox --proxy-server=http:\/\/localhost:8000/' /home/$USER/tagui/src/tagui
 
 RUN ln -sf /home/$USER/tagui/src/tagui /usr/local/bin/tagui && \
