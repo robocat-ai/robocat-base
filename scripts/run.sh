@@ -14,12 +14,9 @@ initialize_flow_directory() {
 
     FLOW_DIR=$ROBOCAT_HOME/flow
 
-    log_d "Cleaning up previous flow directory: $FLOW_DIR"
-
-    rm -rf "$FLOW_DIR"
     mkdir -p "$FLOW_DIR"
 
-    log_d "Making a fresh copy of flow directory..."
+    log_d "Copying flow directory..."
 
     cp -rT "$FLOW_SOURCE_DIR" "$FLOW_DIR"
 
