@@ -16,7 +16,11 @@ initialize_flow_directory() {
 
     mkdir -p "$FLOW_DIR"
 
-    log_d "Copying flow directory..."
+    log_d "Cleaning previous flow data"
+
+    rm -rf "$FLOW_DIR/input" "$FLOW_DIR/output"
+
+    log_d "Copying flow directory"
 
     cp -rT "$FLOW_SOURCE_DIR" "$FLOW_DIR"
 
