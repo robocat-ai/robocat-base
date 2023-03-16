@@ -16,17 +16,29 @@ initialize_flow_directory() {
 
     mkdir -p "$FLOW_DIR"
 
-    log_d "Cleaning previous flow data"
-
-    rm -rf "$FLOW_DIR/input" "$FLOW_DIR/output"
-
     log_d "Copying flow directory"
 
     cp -rT "$FLOW_SOURCE_DIR" "$FLOW_DIR"
 
+    log_d "Cleaning previous flow output"
+
+    rm -rf "$FLOW_DIR"/output/*
+
     log_d "Initialized flow directory: $FLOW_DIR"
 
     export FLOW_DIR
+}
+
+cleanup_flow_directory() {
+    cd $ROBOCAT_HOME
+
+    FLOW_DIR=$ROBOCAT_HOME/flow
+
+    log_d "Cleaning up flow directory: $FLOW_DIR"
+
+    rm -rf $FLOW_DIR
+
+    log_d "Cleaned up flow directory"
 }
 
 main() {
@@ -90,6 +102,8 @@ main() {
     tagui "$FLOW_PATH" "$DATA_PATH"
 
     kill_tinyproxy
+
+    cleanup_flow_directory
 }
 
 log_i() {
