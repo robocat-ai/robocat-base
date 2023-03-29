@@ -23,7 +23,10 @@ main() {
 
     if [ -n "$(which robocat)" ]; then
         log_i "Starting Robocat..."
-        robocat &
+        if [ -n "$ROBOCAT_ARGS" ]; then
+            log_d "Running robocat with arguments: $ROBOCAT_ARGS"
+        fi
+        robocat $ROBOCAT_ARGS &
         last_process=$!
     fi
 

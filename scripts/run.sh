@@ -100,10 +100,13 @@ main() {
 
     rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
     tagui "$FLOW_PATH" "$DATA_PATH"
+    taguiStatus=$?
 
     kill_tinyproxy
 
     cleanup_flow_directory
+
+    exit $taguiStatus
 }
 
 log_i() {
