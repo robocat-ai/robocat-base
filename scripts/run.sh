@@ -99,7 +99,9 @@ main() {
     log_d "tinyproxy started"
 
     rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
-    tagui "$FLOW_PATH" "$DATA_PATH"
+    TAGUI_COMMAND="tagui $FLOW_PATH $DATA_PATH $TAGUI_ARGS"
+    log_d "Running TagUI with the following command: $TAGUI_COMMAND"
+    $TAGUI_COMMAND
     taguiStatus=$?
 
     kill_tinyproxy
@@ -181,6 +183,15 @@ parse_arguments() {
             fi
 
             PROXY_PROTOCOL=$1
+            ;;
+        --tagui-arguments)
+            shift
+            if [[ -z $1 ]]; then
+                log_e "TagUI arguments must not be empty"
+                exit 1
+            fi
+
+            TAGUI_ARGS=$1
             ;;
         *)
             FLOW_PATH=$1
