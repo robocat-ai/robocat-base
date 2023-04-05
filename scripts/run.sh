@@ -98,6 +98,16 @@ main() {
 
     log_d "tinyproxy started"
 
+    log_d "Stopping previous TagUI run..."
+
+    kill_tagui
+
+    if [ $? -ne 0 ]; then
+        log_d "Got error while trying to stop TagUI run"
+    else
+        log_d "TagUI run stopped successfuly"
+    fi
+
     rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
     TAGUI_COMMAND="tagui $FLOW_PATH $DATA_PATH $TAGUI_ARGS"
     log_d "Running TagUI with the following command: $TAGUI_COMMAND"
