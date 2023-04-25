@@ -108,7 +108,13 @@ main() {
         log_d "TagUI run stopped successfuly"
     fi
 
-    rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
+    if [ -z "$KEEP_CHROME_PROFILE" ]; then
+        log_d "Clearing previous chrome profile"
+        rm -rf $ROBOCAT_HOME/tagui/src/chrome/tagui_user_profile
+    else
+        log_d "Reusing previous chrome profile"
+    fi
+
     TAGUI_COMMAND="tagui $FLOW_PATH $DATA_PATH $TAGUI_ARGS"
     log_d "Running TagUI with the following command: $TAGUI_COMMAND"
     $TAGUI_COMMAND
